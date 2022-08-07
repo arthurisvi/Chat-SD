@@ -1,7 +1,13 @@
-import React, { useState } from "react";
-import io from 'socket.io-client'
+import React, { useEffect, useState } from "react";
+import io from 'socket.io-client';
+import { v4 as uuidv4 } from "uuid";
 
-const socket = io('http://localhost:8000')
+const myId = uuidv4()
+
+const socket = io("http://localhost:8000", {
+  withCredentials: true,
+  transports: ["websocket"],
+});
 
 socket.on('connect', ()=> console.log('[IO] Connect = > New connection'))
 
@@ -9,18 +15,20 @@ const Chat = () => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
 
+  useEffect(() => {
+    const handleNewMessage = newMessage => setMessages([...messages, newMessage])
+    socket.on('webchat', handleNewMessage)
+    return ()=> socket.off('webchat', handleNewMessage)
+  }, [messages])
+
   const handleFormSubmit = (event) => {
     event.preventDefault();
     if (message.trim()) {
-      setMessages([
-        ...messages,
-        {
-          id: messages.length + 1,
-          message: message,
-        },
-      ]);
+      socket.emit("webchat", {
+        id: messages.length + 1,
+        message: message,
+      });
       setMessage("");
-      console.log(messages);
     }
   };
 
@@ -33,8 +41,6 @@ const Chat = () => {
           <input
             type="text"
             id="msg"
-            // autofocus
-            // autocomplete="off"
             onChange={handleInputChange}
             placeholder="Digite a mensagem"
             value={message}
