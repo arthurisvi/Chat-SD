@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import io from 'socket.io-client';
+import io from "socket.io-client";
 import { v4 as uuidv4 } from "uuid";
 
-const myId = uuidv4()
+const myId = uuidv4();
 
 const socket = io("http://localhost:8000", {
   withCredentials: true,
@@ -36,25 +36,30 @@ const Chat = () => {
 
   return (
     <main className="container">
-      <div className="nav">
-        <strong>Sistemas Distribuídos - 2022.1</strong>
-      </div>
-      <ul className="list">
-        {messages.map((m, index) => (
-          <li
-            className={`list__item list__item--${
-              m.id === myId ? "mine" : "other"
-            }`}
-            key={index}
-          >
-            <span
-              className={`message message--${m.id === myId ? "mine" : "other"}`}
+      <div>
+        <div className="nav">
+          <img class = "img-perfil" src="https://i.ibb.co/z2JkkQN/image.png" alt ="sd"/>
+          <strong>Sistemas Distribuídos - 2022.1</strong>
+        </div>
+        <ul className="list">
+          {messages.map((m, index) => (
+            <li
+              className={`list__item list__item--${
+                m.id === myId ? "mine" : "other"
+              }`}
+              key={index}
             >
-              {m.message}
-            </span>
-          </li>
-        ))}
-      </ul>
+              <span
+                className={`message message--${
+                  m.id === myId ? "mine" : "other"
+                }`}
+              >
+                {m.message}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
       <form className="form" onSubmit={handleFormSubmit}>
         <input
           className="form__field"
@@ -63,7 +68,7 @@ const Chat = () => {
           type="text"
           value={message}
         />
-        <div class="buttonMic"></div>
+        {/* <div class="buttonMic"></div> */}
       </form>
     </main>
   );
