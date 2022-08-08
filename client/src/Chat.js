@@ -25,7 +25,7 @@ const Chat = () => {
     event.preventDefault();
     if (message.trim()) {
       socket.emit("webchat", {
-        id: messages.length + 1,
+        id: myId,
         message: message,
       });
       setMessage("");
@@ -35,24 +35,36 @@ const Chat = () => {
   const handleInputChange = (event) => setMessage(event.target.value);
 
   return (
-    <main>
-      <header>
-        <form id="form" onSubmit={handleFormSubmit}>
-          <input
-            type="text"
-            id="msg"
-            onChange={handleInputChange}
-            placeholder="Digite a mensagem"
-            value={message}
-          />
-          <button type="submit">Enviar</button>
-        </form>
-      </header>
-      <ul id="messages">
-        {messages.map((msg) => (
-          <li key={msg.id}>{msg.message}</li>
+    <main className="container">
+      <div className="nav">
+        <strong>Sistemas Distribuídos - 2022.1</strong>
+      </div>
+      <ul className="list">
+        {messages.map((m, index) => (
+          <li
+            className={`list__item list__item--${
+              m.id === myId ? "mine" : "other"
+            }`}
+            key={index}
+          >
+            <span
+              className={`message message--${m.id === myId ? "mine" : "other"}`}
+            >
+              {m.message}
+            </span>
+          </li>
         ))}
       </ul>
+      <form className="form" onSubmit={handleFormSubmit}>
+        <input
+          className="form__field"
+          onChange={handleInputChange}
+          placeholder="Mensagem"
+          type="text"
+          value={message}
+        />
+        <div class="buttonMic"></div>
+      </form>
     </main>
   );
 };
