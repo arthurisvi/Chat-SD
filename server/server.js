@@ -25,3 +25,4 @@ io.on("connection", (socket) => {
 })
 
 httpServer.listen(port);
+module.exports = io;
