@@ -4,13 +4,10 @@ import { v4 as uuidv4 } from "uuid";
 
 const myId = uuidv4();
 
-const socket = io(
-  "https://97c8-2804-29b8-50ab-ba4-586d-28e2-1631-528d.sa.ngrok.io",
-  {
-    withCredentials: true,
-    transports: ["websocket"],
-  }
-);
+const socket = io("0.tcp.sa.ngrok.io:19545", {
+  withCredentials: true,
+  transports: ["websocket"],
+});
 
 socket.on('connect', ()=> console.log('[IO] Connect = > New connection'))
 
