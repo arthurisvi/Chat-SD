@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 
 const myId = uuidv4();
 
-const socket = io("0.tcp.sa.ngrok.io:19545", {
+const socket = io("localhost:8000", {
   withCredentials: true,
   transports: ["websocket"],
 });
