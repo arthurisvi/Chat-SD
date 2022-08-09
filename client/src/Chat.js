@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 
 const myId = uuidv4();
 
-const socket = io("localhost:8000", {
+const socket = io("http://localhost:8000", {
   withCredentials: true,
   transports: ["websocket"],
 });
