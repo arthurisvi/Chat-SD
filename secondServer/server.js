@@ -8,14 +8,14 @@ server.listen(port, () => {
     io.on("connection", (socket) => {
         console.log("Cliente conectado: " + socket.id + "na porta " + port);
 
-        // socket.on("webchat", (message) => {
-        //     console.log("[SOCKET] Webchat:", message);
-        //     io.emit("webchat", message);
-        // });
+        socket.on("channel", (message) => {
+            console.log("[SOCKET] Webchat no server2:", message);
+            // io.emit("webchat", message);
+        });
 
-        // socket.on("disconnect", () => {
-        //     console.log("[SOCKET] Disconnect");
-        // });
+        socket.on("disconnect", () => {
+            console.log("[SOCKET] Disconnect");
+        });
     });
 });
 
