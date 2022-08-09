@@ -1,11 +1,11 @@
 const httpServer = require("http").createServer();
-const port = 8000;
+const port = 8001;
 // const options = {
 //     /* ... */
 // };
 // const io = require("socket.io")(httpServer, options);
 const io = require("socket.io")(httpServer);
-
+io.set('transports', ['websocket'])
 
 io.on("connection", (socket) => {
     // let address = socket.handshake.address;
