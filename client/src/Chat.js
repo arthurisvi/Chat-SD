@@ -38,7 +38,7 @@ const Chat = () => {
     <main className="container">
       <div>
         <div className="nav">
-          <img class = "img-perfil" src="https://i.ibb.co/z2JkkQN/image.png" alt ="sd"/>
+          <img className = "img-perfil" src="https://i.ibb.co/z2JkkQN/image.png" alt ="sd"/>
           <strong>Sistemas Distribuídos - 2022.1</strong>
         </div>
         <ul className="list">
