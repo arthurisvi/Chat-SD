@@ -1,28 +1,23 @@
-const httpServer = require("http").createServer();
+const http = require("http");
 const port = 8001;
-// const options = {
-//     /* ... */
-// };
-// const io = require("socket.io")(httpServer, options);
-const io = require("socket.io")(httpServer);
-io.set('transports', ['websocket'])
 
-io.on("connection", (socket) => {
-    // let address = socket.handshake.address;
-    // let clientIp = socket.request.connection.remoteAddress;
-    // console.log(`IP: ${clientIp}`)
-    // console.log(`Cliente conectado: ${address.address}:${address.port}`)
-    console.log("Cliente conectado: " + socket.id);
+const server = http.createServer();
+const io = require("socket.io")(server);
 
-    socket.on('webchat', (message) => {
-        console.log('[SOCKET] Webchat:', message)
-        io.emit('webchat', message)
-    })
+server.listen(port, () => {
+    console.log("Servidor subiu na porta " + port)
+    io.on("connection", (socket) => {
+        console.log("Cliente conectado: " + socket.id + "na porta " + port);
 
-    socket.on('disconnect', () => {
-        console.log('[SOCKET] Disconnect')
-    })
-})
+        // socket.on("webchat", (message) => {
+        //     console.log("[SOCKET] Webchat:", message);
+        //     io.emit("webchat", message);
+        // });
 
-httpServer.listen(port);
+        // socket.on("disconnect", () => {
+        //     console.log("[SOCKET] Disconnect");
+        // });
+    });
+});
+
 module.exports = io;

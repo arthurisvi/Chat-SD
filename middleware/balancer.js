@@ -1,37 +1,23 @@
-const http = require('http');
+const http = require("http");
+const { io } = require("socket.io-client");
 
-const { host, balancer: port, getServerPort } = require('./config');
+const {
+    host,
+    balancer: port,
+    servers: ports,
+} = require("./config");
 
 const balancer = http.createServer();
-const io = require("socket.io")(balancer);
 
 balancer.listen(port, host, () => {
-    io.on("connection", (socket) => {
-        console.log("Cliente conectado: " + socket.id);
+    console.log(`Load balancer rodando na porta ${port}`);
 
-        socket.on("webchat", (message) => {
-            console.log("[SOCKET] Webchat:", message);
-            io.emit("webchat", message);
+    ports.map((port) => {
+        const socket = io(`http://localhost:${port}`, {
+            withCredentials: true,
+            transports: ["websocket"],
         });
 
-        socket.on("disconnect", () => {
-            console.log("[SOCKET] Disconnect");
-        });
+        socket.on("connect", () => console.log("Conexão iniciada na porta: " + port));
     });
-});
-
-
-balancer.on('request', (req, res) => {
-    const port = getServerPort();
-    const request = {
-        host,
-        port,
-        path: req.url,
-        method: req.method,
-        headers: req.headers
-    };
-
-    const connector = http.request(request, (resp) => resp.pipe(res));
-
-    req.pipe(connector);
 });
