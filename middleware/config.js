@@ -14,7 +14,6 @@ const config = {
         config.currentServerPort = nextPort;
 
         // retornamos a porta correta através de config.servers
-        console.log(config.servers[nextPort]);
         return config.servers[nextPort];
     },
 };
