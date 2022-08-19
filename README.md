@@ -1,6 +1,9 @@
 # Chat-SD
 Bate-papo em tempo real desenvolvido para a disciplina de Sistema Distribuídos. 
 
+## Caso de uso principal
+Vários usuários conectados no mesmo chat podendo conversar entre si mesmo estando conectados e enviando mensagens de servidores diferentes.
+
 ## Tecnologias
 * Front-end (Client): ReactJS
 * Servers/middleware: NodeJS
